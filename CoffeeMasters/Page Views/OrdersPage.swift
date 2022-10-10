@@ -11,7 +11,7 @@ struct OrdersPage: View {
     
     @EnvironmentObject var menuManager: MenuManager
     @EnvironmentObject var cartManager: CartManager
-    
+
     @AppStorage("name") var name = ""
     @AppStorage("phone") var phone = ""
     
@@ -20,13 +20,13 @@ struct OrdersPage: View {
     var body: some View {
         
         NavigationView {
-            if cartManager.products.count == 0 {
+            if cartManager.cart.count == 0 {
                 Text("Your order is empty")
                     .navigationTitle("Your Order")
             } else {
                 List {
                     Section("ITEMS") {
-                        ForEach(cartManager.products, id:\.0.id) { item in
+                        ForEach(cartManager.cart, id:\.0.id) { item in
                             OrderItem(item: item)
                         }
                     }.listRowBackground(Color("Background"))

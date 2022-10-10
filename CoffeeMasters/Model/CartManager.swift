@@ -8,27 +8,27 @@
 import Foundation
 
 class CartManager: ObservableObject {
-    var products: [(Product, Int)] = []
-        
+    @Published var cart: [(Product, Int)] = []
+    
     func add(product: Product, quantity: Int) {
-        products.append((product, quantity))
+        self.cart.append( (product, quantity) )
     }
-        
+    
     func remove(product: Product) {
-        products.removeAll { productInCart in
-            productInCart.0.id == product.id
+        self.cart.removeAll { itemInCart in
+            return itemInCart.0.id==product.id
         }
     }
-    
+
     func clear() {
-        products.removeAll()
+        cart.removeAll()
     }
-    
+
     func total() -> Double {
-        var total = 0.0
-        for item in products {
-            total += item.0.price * Double(item.1)
-        }
-        return total
-    }
+       var total = 0.0
+       for item in cart {
+           total += item.0.price * Double(item.1)
+       }
+       return total
+   }
 }
