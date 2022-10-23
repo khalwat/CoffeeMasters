@@ -10,7 +10,8 @@ import SwiftUI
 struct MenuPage: View {
     
     @EnvironmentObject var menuManager: MenuManager
-    
+    @State var search: String = ""
+
     var body: some View {
         VStack {
             NavigationView {
@@ -25,14 +26,14 @@ struct MenuPage: View {
                             }
                         } else {
                             ForEach(menuManager.menu) { category in
-                                if category.products.count > 0 {
+                                if category.filteredItems(text: search).count > 0 {
                                     Text(category.name)
                                     .listRowBackground(Color("Background"))
                                     .foregroundColor(Color("Secondary"))
                                     .padding()
                                 }
                                 
-                                ForEach(category.products) { item in
+                                ForEach(category.filteredItems(text: search)) { item in
                                     ZStack {
                                         NavigationLink(destination: DetailsPage(product: item)) {
                                             EmptyView()
@@ -45,8 +46,7 @@ struct MenuPage: View {
                                     }
                                     
                                 }
-                            }
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            }                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color("Background"))
                         }
@@ -54,6 +54,7 @@ struct MenuPage: View {
                     .listStyle(.insetGrouped)
                     .navigationTitle("Products")
                     .background(Color("SurfaceBackground"))
+                    .searchable(text: $search)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())

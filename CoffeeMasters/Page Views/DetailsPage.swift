@@ -47,7 +47,10 @@ struct DetailsPage: View {
 
         }
             .navigationTitle(product.name)
-    }
+            .toolbar {
+                LikeButton(product: product)
+            }
+   }
 }
 
 struct DetailsPage_Previews: PreviewProvider {

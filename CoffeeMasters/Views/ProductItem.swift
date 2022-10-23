@@ -25,6 +25,7 @@ struct ProductItem: View {
 
                 }.padding(8)
                 Spacer()
+                LikeButton(product: product)
             }
         }
         .background(Color("SurfaceBackground"))
